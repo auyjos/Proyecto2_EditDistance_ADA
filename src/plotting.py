@@ -18,8 +18,9 @@ def plot_dac_times(results: list[dict], output_dir: Path = RESULTS_DIR):
         print("No hay datos de DaC para graficar.")
         return
 
-    sizes = [max(r["m"], r["n"]) for r in dac_data]
-    times = [r["time_dac"] for r in dac_data]
+    pairs = sorted((max(r["m"], r["n"]), r["time_dac"]) for r in dac_data)
+    sizes = [p[0] for p in pairs]
+    times = [p[1] for p in pairs]
 
     fig, ax = plt.subplots(figsize=(10, 6), layout="constrained")
     ax.scatter(sizes, times, color="tab:red", zorder=5, label="DaC (empírico)")
@@ -59,8 +60,9 @@ def plot_dp_times(results: list[dict], output_dir: Path = RESULTS_DIR):
         print("No hay datos de DP para graficar.")
         return
 
-    sizes = [max(r["m"], r["n"]) for r in dp_data]
-    times = [r["time_dp"] for r in dp_data]
+    pairs = sorted((max(r["m"], r["n"]), r["time_dp"]) for r in dp_data)
+    sizes = [p[0] for p in pairs]
+    times = [p[1] for p in pairs]
 
     fig, ax = plt.subplots(figsize=(10, 6), layout="constrained")
     ax.scatter(sizes, times, color="tab:blue", zorder=5, label="DP (empírico)")
@@ -70,9 +72,9 @@ def plot_dp_times(results: list[dict], output_dir: Path = RESULTS_DIR):
     if len(sizes) >= 3:
         sizes_arr = np.array(sizes, dtype=float)
         times_arr = np.array(times, dtype=float)
-        positive = times_arr > 0
-        if positive.sum() >= 2:
-            c = np.mean(times_arr[positive] / (sizes_arr[positive] ** 2))
+        valid = (times_arr > 0) & (sizes_arr > 0)
+        if valid.sum() >= 2:
+            c = np.mean(times_arr[valid] / (sizes_arr[valid] ** 2))
             x_fit = np.linspace(min(sizes), max(sizes), 100)
             y_fit = c * x_fit ** 2
             ax.plot(x_fit, y_fit, color="tab:cyan", linestyle="-",
@@ -102,9 +104,12 @@ def plot_comparison(results: list[dict], output_dir: Path = RESULTS_DIR):
         print("No hay datos comparativos para graficar.")
         return
 
-    sizes = [max(r["m"], r["n"]) for r in both]
-    times_dac = [r["time_dac"] for r in both]
-    times_dp = [r["time_dp"] for r in both]
+    pairs = sorted(
+        (max(r["m"], r["n"]), r["time_dac"], r["time_dp"]) for r in both
+    )
+    sizes = [p[0] for p in pairs]
+    times_dac = [p[1] for p in pairs]
+    times_dp = [p[2] for p in pairs]
 
     fig, ax = plt.subplots(figsize=(10, 6), layout="constrained")
     ax.scatter(sizes, times_dac, color="tab:red", zorder=5, label="DaC", s=60)
