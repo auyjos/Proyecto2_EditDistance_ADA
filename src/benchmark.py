@@ -16,6 +16,13 @@ MIN_REPEATS = 3
 SMALL_THRESHOLD = 10  # m+n <= este valor se repite varias veces
 
 
+def _preview_string(s: str, max_len: int = 24) -> str:
+    """Devuelve una vista corta y legible de una cadena para logs."""
+    if len(s) <= max_len:
+        return s
+    return f"{s[:max_len]}..."
+
+
 def _run_dac(x: str, y: str) -> int:
     return solve_dac(x, y)
 
@@ -83,9 +90,17 @@ def run_benchmarks(inputs: list[dict],
     results = []
     for inp in inputs:
         if verbose:
-            print(f"  Benchmark #{inp['id']:2d} "
-                  f"[{inp['group']}] m={inp['m']:5d} n={inp['n']:5d} "
-                  f"- {inp['description']}...", end="", flush=True)
+            if inp["id"] <= 10:
+                x_preview = _preview_string(inp["x"])
+                y_preview = _preview_string(inp["y"])
+                print(f"  Benchmark #{inp['id']:2d} "
+                      f"[{inp['group']}] m={inp['m']:5d} n={inp['n']:5d} "
+                      f"x='{x_preview}' y='{y_preview}' "
+                      f"- {inp['description']}...", end="", flush=True)
+            else:
+                print(f"  Benchmark #{inp['id']:2d} "
+                      f"[{inp['group']}] m={inp['m']:5d} n={inp['n']:5d} "
+                      f"- {inp['description']}...", end="", flush=True)
 
         result = benchmark_single(inp, dac_timeout=dac_timeout)
         results.append(result)
