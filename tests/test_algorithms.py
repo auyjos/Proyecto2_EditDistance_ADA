@@ -1,10 +1,3 @@
-"""
-Tests para los algoritmos de Edit Distance.
-
-Verifica que ambas implementaciones (DaC y DP) producen
-resultados correctos e idénticos.
-"""
-
 import pytest
 
 from src.dac import solve_dac
@@ -33,8 +26,6 @@ KNOWN_CASES = [
 
 
 class TestDaC:
-    """Tests para el algoritmo Divide and Conquer."""
-
     @pytest.mark.parametrize("x,y,expected", KNOWN_CASES)
     def test_known_cases(self, x, y, expected):
         assert solve_dac(x, y) == expected
@@ -59,8 +50,6 @@ class TestDaC:
 
 
 class TestDP:
-    """Tests para el algoritmo de Programación Dinámica."""
-
     @pytest.mark.parametrize("x,y,expected", KNOWN_CASES)
     def test_known_cases(self, x, y, expected):
         assert edit_distance_dp(x, y) == expected
@@ -91,8 +80,6 @@ class TestDP:
 
 
 class TestConsistency:
-    """Verifica que DaC y DP producen el mismo resultado."""
-
     @pytest.mark.parametrize("x,y,expected", KNOWN_CASES)
     def test_dac_equals_dp(self, x, y, expected):
         assert solve_dac(x, y) == edit_distance_dp(x, y)
@@ -103,8 +90,6 @@ class TestConsistency:
 
 
 class TestReconstruction:
-    """Tests para la reconstrucción de operaciones."""
-
     def test_operations_count(self):
         x, y = "kitten", "sitting"
         ops = reconstruct_operations(x, y)

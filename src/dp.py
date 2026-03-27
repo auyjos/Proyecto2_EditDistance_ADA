@@ -1,36 +1,4 @@
-"""
-Edit Distance - Programación Dinámica (Bottom-Up con tabulación).
-
-Complejidad temporal: O(m * n).
-Complejidad espacial: O(m * n) para la tabla completa.
-"""
-
-
 def edit_distance_dp(x: str, y: str) -> int:
-    """
-    Calcula la distancia de edición entre x e y usando
-    programación dinámica bottom-up (tabulación).
-
-    dp[i][j] = distancia de edición entre x[0..i-1] e y[0..j-1].
-
-    Recurrencia:
-        dp[i][0] = i  (eliminar todos los caracteres de x)
-        dp[0][j] = j  (insertar todos los caracteres de y)
-
-        Si x[i-1] == y[j-1]:
-            dp[i][j] = dp[i-1][j-1]
-        Si no:
-            dp[i][j] = 1 + min(dp[i-1][j],      # Delete
-                                dp[i][j-1],      # Insert
-                                dp[i-1][j-1])    # Replace
-
-    Parámetros:
-        x: cadena fuente
-        y: cadena destino
-
-    Retorna:
-        Mínimo número de operaciones para transformar x en y.
-    """
     m = len(x)
     n = len(y)
 
@@ -59,10 +27,6 @@ def edit_distance_dp(x: str, y: str) -> int:
 
 
 def edit_distance_dp_optimized(x: str, y: str) -> int:
-    """
-    Versión optimizada en espacio: O(min(m, n)).
-    Usa solo dos filas en lugar de la tabla completa.
-    """
     # Asegurar que n <= m para usar menos espacio
     if len(x) < len(y):
         x, y = y, x
@@ -86,12 +50,6 @@ def edit_distance_dp_optimized(x: str, y: str) -> int:
 
 
 def reconstruct_operations(x: str, y: str) -> list[str]:
-    """
-    Reconstruye la secuencia de operaciones óptimas
-    haciendo backtracking sobre la tabla DP.
-
-    Retorna lista de operaciones en orden.
-    """
     m = len(x)
     n = len(y)
 

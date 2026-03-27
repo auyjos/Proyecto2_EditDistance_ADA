@@ -1,9 +1,3 @@
-"""
-Módulo de visualización para el análisis empírico de Edit Distance.
-
-Genera gráficas comparativas entre DaC y DP.
-"""
-
 from pathlib import Path
 
 import matplotlib
@@ -16,11 +10,6 @@ RESULTS_DIR = Path("results")
 
 
 def plot_dac_times(results: list[dict], output_dir: Path = RESULTS_DIR):
-    """
-    Gráfica 1: Tiempo DaC vs tamaño de entrada.
-    Muestra crecimiento exponencial. Eje Y en escala logarítmica.
-    Solo incluye entradas donde DaC se ejecutó exitosamente.
-    """
     dac_data = [
         r for r in results
         if not r["dac_timeout"] and r["time_dac"] is not None
@@ -65,10 +54,6 @@ def plot_dac_times(results: list[dict], output_dir: Path = RESULTS_DIR):
 
 
 def plot_dp_times(results: list[dict], output_dir: Path = RESULTS_DIR):
-    """
-    Gráfica 2: Tiempo DP vs tamaño de entrada.
-    Muestra crecimiento cuadrático O(m*n).
-    """
     dp_data = [r for r in results if r["time_dp"] is not None]
     if not dp_data:
         print("No hay datos de DP para graficar.")
@@ -107,10 +92,6 @@ def plot_dp_times(results: list[dict], output_dir: Path = RESULTS_DIR):
 
 
 def plot_comparison(results: list[dict], output_dir: Path = RESULTS_DIR):
-    """
-    Gráfica 3: Comparación DaC vs DP en entradas donde ambos ejecutaron.
-    Eje Y en escala logarítmica.
-    """
     both = [
         r for r in results
         if not r["dac_timeout"]

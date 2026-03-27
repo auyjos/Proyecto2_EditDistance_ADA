@@ -1,15 +1,3 @@
-"""
-Punto de entrada principal para el proyecto Edit Distance.
-
-Ejecuta benchmarks, genera gráficas y guarda resultados.
-
-Uso:
-    python main.py              # Ejecutar todo (benchmarks + gráficas)
-    python main.py --bench      # Solo benchmarks
-    python main.py --plot       # Solo gráficas (requiere CSV previo)
-    python main.py --quick      # Benchmarks rápidos (solo grupos A-D)
-"""
-
 import argparse
 import csv
 import sys

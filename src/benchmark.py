@@ -1,10 +1,3 @@
-"""
-Módulo de benchmarking para Edit Distance.
-
-Mide tiempos de ejecución de ambos algoritmos (DaC y DP)
-sobre las entradas de prueba, con timeout para DaC.
-"""
-
 import csv
 import time
 import signal
@@ -24,15 +17,10 @@ SMALL_THRESHOLD = 10  # m+n <= este valor se repite varias veces
 
 
 def _run_dac(x: str, y: str) -> int:
-    """Ejecuta DaC en un proceso separado (para poder aplicar timeout)."""
     return solve_dac(x, y)
 
-
+# Tiempo de ejecución promedio de una función con argumentos dados.
 def measure_time(func, *args, repeats: int = 1) -> float:
-    """
-    Mide el tiempo de ejecución de func(*args).
-    Retorna el tiempo promedio en segundos.
-    """
     times = []
     for _ in range(repeats):
         start = time.perf_counter()
@@ -41,17 +29,7 @@ def measure_time(func, *args, repeats: int = 1) -> float:
         times.append(end - start)
     return sum(times) / len(times), result
 
-
 def benchmark_single(inp: dict, dac_timeout: float = DAC_TIMEOUT) -> dict:
-    """
-    Ejecuta benchmark para una sola entrada.
-
-    Retorna diccionario con:
-        id, m, n, group, description,
-        result_dac, time_dac,
-        result_dp, time_dp,
-        dac_timeout (bool)
-    """
     x, y = inp["x"], inp["y"]
     m, n = inp["m"], inp["n"]
     repeats = MIN_REPEATS if (m + n) <= SMALL_THRESHOLD else 1
@@ -102,10 +80,6 @@ def benchmark_single(inp: dict, dac_timeout: float = DAC_TIMEOUT) -> dict:
 def run_benchmarks(inputs: list[dict],
                    dac_timeout: float = DAC_TIMEOUT,
                    verbose: bool = True) -> list[dict]:
-    """
-    Ejecuta benchmarks para todas las entradas.
-    Retorna lista de resultados.
-    """
     results = []
     for inp in inputs:
         if verbose:
@@ -128,7 +102,6 @@ def run_benchmarks(inputs: list[dict],
 
 
 def save_results_csv(results: list[dict], filepath: str | Path):
-    """Guarda los resultados del benchmark en un archivo CSV."""
     filepath = Path(filepath)
     filepath.parent.mkdir(parents=True, exist_ok=True)
 

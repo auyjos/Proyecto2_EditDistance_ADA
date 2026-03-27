@@ -1,14 +1,3 @@
-"""
-Generador de entradas de prueba para Edit Distance.
-
-Produce 35 entradas organizadas en 5 grupos:
-  A (1-5):   Casos triviales y base
-  B (6-10):  Cadenas pequeñas similares
-  C (11-15): Cadenas pequeñas muy diferentes (peor caso DaC)
-  D (16-25): Tamaños crecientes para medir DaC (exponencial)
-  E (26-35): Tamaños crecientes solo para DP (polinomial)
-"""
-
 import random
 
 SEED = 42
