@@ -4,6 +4,10 @@
 
 **Edit Distance** (Distancia de Edición) es el número mínimo de operaciones elementales (inserción, eliminación o reemplazo de un carácter) necesarias para transformar una cadena `x` en otra cadena `y`.
 
+### Video 
+
+[![Ver video](https://img.youtube.com/vi/o-ljGF_BHk4/0.jpg)](https://youtu.be/o-ljGF_BHk4)
+
 ### Ejemplo
 - Transformar `"kitten"` en `"sitting"`:
   - `kitten` → `sitten` (replace k→s)
